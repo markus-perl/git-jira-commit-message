@@ -1,10 +1,19 @@
 #!/usr/bin/php
 <?php
 
+
 $username = 'username';
 $password = 'password';
 $api = 'http://my.jira.url/rest/api/2/';
 
+
+$configFile = getenv("HOME") . '/.git-jira-commit-message';
+if (file_exists($configFile)) {
+	$config = parse_ini_file($configFile, false);
+	if ($config['username']) $username = $config['username'];
+	if ($config['password']) $password = $config['password'];
+        if ($config['api']) $api = $config['api'];
+}
 
 if (!isset($argv[1])) {
 	echo 'Usage: ' . $argv[0] . ' <Jira Issue ID>' .PHP_EOL;
